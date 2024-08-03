@@ -67,23 +67,11 @@ const OAuth2Example = () => {
   return (
     <div>
       <h1>OAuth2 Example</h1>
-      {isAuthenticated ? (
-        <div>
-          <h2>Logged In</h2>
-          {userInfo && (
-            <div>
-              <p><strong>Name:</strong> {userInfo.name}</p>
-              <p><strong>Email:</strong> {userInfo.email}</p>
-              <img src={userInfo.picture} alt="Profile" width="100" />
-            </div>
-          )}
-        </div>
-      ) : (
         <div>
           <p>Please authenticate to access your information.</p>
           <button id="authButton">Authenticate</button>
         </div>
-      )}
+      
     </div>
   );
 };
