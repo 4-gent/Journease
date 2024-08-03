@@ -1,13 +1,11 @@
 from pathlib import Path
-import fastapi
-import fastapi.staticfiles
-from fastapi.responses import StreamingResponse
-import json
 
-from modal import App, Image, Mount, asgi_app
 
-frontend_path = Path(__file__).parent.parent / "llm-frontend"
+from modal import App, Mount, asgi_app
 
+frontend_path = Path(__file__).parent / "llmfrontend"
+
+app = App("Testing")
 
 @app.function(
     mounts=[Mount.from_local_dir(frontend_path, remote_path="/assets")],
@@ -31,7 +29,7 @@ def tgi_app():
         return {
             "backlog": stats.backlog,
             "num_total_runners": stats.num_total_runners,
-            "model": MODEL_ID,
+            "model": "meta-llama/Meta-Llama-3-70B-Instruct",
         }
 
     @web_app.get("/completion/{question}")

@@ -2,6 +2,8 @@
 
 # modal deploying LLama-3 to create generative responses!
 
+# modal deploy LLama-3.py
+
 import os
 import subprocess
 from pathlib import Path
@@ -46,12 +48,12 @@ tgi_image = (
 
 GPU_CONFIG = gpu.H100(count=2)  # 2 H100s
 
-
+# timesout in 20 minutes
 @app.cls(
     secrets=[Secret.from_name("huggingface-secret")],
     gpu=GPU_CONFIG,
     allow_concurrent_inputs=15,
-    container_idle_timeout=60 * 10,
+    container_idle_timeout=1200,
     timeout=60 * 60,
     image=tgi_image,
 )
