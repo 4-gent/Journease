@@ -11,3 +11,5 @@ Download all of the requirements!
 pip install -r requirements.txt
 
 Read the documentation in each .py file for their use cases!
+
+requirements.txt includes all the libraries for this intended directory!

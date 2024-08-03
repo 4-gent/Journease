@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import './public/main.css'
+import OAuth2Example from './routes/OAuth2Example';
 
 export default function Main(){
     useEffect(() => {
@@ -22,6 +23,7 @@ export default function Main(){
     return(
         // this will be sign in landing page
         <div>
+            <OAuth2Example />
             <h1>Sign in</h1>
             <button onClick={handleSignIn}>Sign in with Google</button>
         </div>
