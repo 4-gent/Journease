@@ -1,11 +1,21 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 import modal
 import json
-import openai
 import re
 
-openai.api_key = '<YOUR_API_KEY>'
-def format_query(user_input):
+app = Flask(__name__)
+
+# Initialize Modal
+modal_app = modal.App()
+llama_function = modal.Function.lookup("example-tgi-Meta-Llama-3-70B-Instruct", "Model.generate")
+
+# change this localhost:3000/ !! 
+@app.route('/temp', methods=['GET'])
+def format_query():
+    # Get user input from the request JSON body
+    user_input = request.json.get('user_input')
+
+    # Construct the prompt
     prompt = f"""
     Extract the following details from the user's input:
     - Location
@@ -19,52 +29,39 @@ def format_query(user_input):
     Output dict with keys: location, price, food, cuisine, other_details.
     """
     
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt},
-        ]
-    )
+    # Assuming llama_function.remote returns a dictionary or JSON response
+    response = llama_function.remote(prompt)
+    
+    return response
 
-    # Extracting the text response
-    response_text = response['choices'][0]['message']['content'].strip()
-
-    try:
-        # Convert the response text to a dictionary
-        extracted_details = json.loads(response_text)
-        return "\n".join(f"{key}: {value}" for key, value in extracted_details.items())
-    except json.JSONDecodeError:
-        return user_input
-
-app = Flask(__name__)
-
-# Initialize Modal
-modal_app = modal.App()
-llama_function = modal.Function.lookup("example-tgi-Meta-Llama-3-70B-Instruct", "Model.generate")
-
-@app.route('/query', methods=['GET'])
+# http://127.0.0.1:4000/query
+@app.route('/query', methods=['GET', 'POST'])
 def query():
-    prompt = "Could you list food spots that fits this criteria?" +\
-    format_query("I'm looking for an Mexican restaurants near 95111 that serve Tacosr.") +\
-    """ 
-    Only return in this JSON format:
-      {
-        "name": "",
-        "address": "",
-        "distance": "",
-        "price_range": "",
-        "hours": {
-          "monday": "",
-          "tuesday": "",
-          "wednesday": "",
-          "thursday": "",
-          "friday": "",
-          "saturday": "",
-          "sunday": ""
-        }
-    """
+    # template
+    formatted_query = "Mexican food"
 
+    prompt = f"""
+    Could you list food spots that fit this criteria? 
+
+    "{formatted_query}"
+
+    Only return in this JSON format:
+    {{
+    "name": "",
+    "address": "",
+    "distance": "",
+    "price_range": "",
+    "hours": {{
+        "monday": "",
+        "tuesday": "",
+        "wednesday": "",
+        "thursday": "",
+        "friday": "",
+        "saturday": "",
+        "sunday": ""
+        }}
+    }}
+    """
     result = llama_function.remote(prompt)
     
     # Use regex to extract the JSON part
