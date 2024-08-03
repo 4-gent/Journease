@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-
-export default function Privacy(){
-    return(
-        <div>
-            Privacy settings page
-        </div>
-    )
-=======
 import React from 'react'
 
 export default function Privacy(){
@@ -31,5 +21,4 @@ export default function Privacy(){
             )}
         </div>
     )
->>>>>>> 2cd7879c66fa9c15a39d54b8e5a13c3b35993207
 }
