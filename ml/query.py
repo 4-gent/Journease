@@ -1,7 +1,41 @@
 from flask import Flask
 import modal
 import json
+import openai
 import re
+
+openai.api_key = '<YOUR_API_KEY>'
+def format_query(user_input):
+    prompt = f"""
+    Extract the following details from the user's input:
+    - Location
+    - Price
+    - Food
+    - Cuisine
+    - Any other details
+
+    User input: "{user_input}"
+    
+    Output dict with keys: location, price, food, cuisine, other_details.
+    """
+    
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt},
+        ]
+    )
+
+    # Extracting the text response
+    response_text = response['choices'][0]['message']['content'].strip()
+
+    try:
+        # Convert the response text to a dictionary
+        extracted_details = json.loads(response_text)
+        return "\n".join(f"{key}: {value}" for key, value in extracted_details.items())
+    except json.JSONDecodeError:
+        return user_input
 
 app = Flask(__name__)
 
@@ -11,10 +45,9 @@ llama_function = modal.Function.lookup("example-tgi-Meta-Llama-3-70B-Instruct", 
 
 @app.route('/query', methods=['GET'])
 def query():
-    prompt = """
-    Could you list food spots with this criteria?
-    {'location': 'New York', 'price': 'around 50 dollars', 'food': 'dinner', 'cuisine': 'Italian', 'other_details': 'good ambience'}
-        
+    prompt = "Could you list food spots that fits this criteria?" +\
+    format_query("I'm looking for an Mexican restaurants near 95111 that serve Tacosr.") +\
+    """ 
     Only return in this JSON format:
       {
         "name": "",
