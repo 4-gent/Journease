@@ -1,6 +1,6 @@
 # This file contains an integration of Llama-3 70B in Modal
 
-# modal deploy Llama-3.py
+# modal deploying LLama-3 to create generative responses!
 
 import os
 import subprocess
