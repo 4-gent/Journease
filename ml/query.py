@@ -4,7 +4,7 @@ import json
 import openai
 import re
 
-openai.api_key = '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'
+openai.api_key = '<YOUR_API_KEY>'
 def format_query(user_input):
     prompt = f"""
     Extract the following details from the user's input:
@@ -46,7 +46,7 @@ llama_function = modal.Function.lookup("example-tgi-Meta-Llama-3-70B-Instruct", 
 @app.route('/query', methods=['GET'])
 def query():
     prompt = "Could you list food spots that fits this criteria?" +\
-    format_query("I'm looking for an Mexican restaurants near 95111 that serve Tacos.") +\
+    format_query("I'm looking for an Mexican restaurants near 95111 that serve Tacosr.") +\
     """ 
     Only return in this JSON format:
       {
