@@ -12,10 +12,8 @@ llama_function = modal.Function.lookup("example-tgi-Meta-Llama-3-70B-Instruct", 
 @app.route('/query', methods=['GET'])
 def query():
     prompt = """
-    Could you list food spots near 95111 that fits this criteria?
-        Food: Tacos
-        Cuisine: Mexican
-        Price Range: '$'
+    Could you list food spots with this criteria?
+    {'location': 'New York', 'price': 'around 50 dollars', 'food': 'dinner', 'cuisine': 'Italian', 'other_details': 'good ambience'}
         
     Only return in this JSON format:
       {
