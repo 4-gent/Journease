@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-class Dash extends React.Component {
+class sideDash extends React.Component {
     // apply use of flex box
     render() {
         return (
