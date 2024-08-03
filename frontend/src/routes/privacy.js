@@ -1,38 +1,65 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+// This contains the use states, given by the user!
 
+// List of imported libraries
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+//
 export default function Privacy() {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const accessToken = localStorage.getItem('accessToken');
+  // Allows for redirection back to OAuth2 or the dashboard
   const navigate = useNavigate();
   const [showSignOut, setShowSignOut] = useState(false);
+  const [events, setEvents] = useState([]);
 
+  // Handles signout, by removing access token ALL information that could be scraped is removed!
   const handleSignOut = () => {
-    // Clear user information and access token from localStorage
     localStorage.removeItem('userInfo');
     localStorage.removeItem('accessToken');
-
-    // Redirect to the login page or home page
     navigate('/');
   };
 
+  // Testing google calendars
+  useEffect(() => {
+    if (accessToken) {
+      fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          setEvents(data.items || []);
+        })
+        .catch(error => {
+          console.error('Error fetching Google Calendar events:', error);
+        });
+    }
+  }, [accessToken]);
+
+  // Manipulate this to change the UI/UX design and implementations
   return (
     <div>
-      Privacy Settings Page
-
+      <h1>Privacy Settings Page</h1>
       {userInfo ? (
         <div>
-          <h2>User Information</h2>
-          <p><strong>Name:</strong> {userInfo.name}</p>
-          <p><strong>Email:</strong> {userInfo.email}</p>
-          <p><strong>Access Token:</strong> {accessToken}</p>
           <div className="profile-container" onClick={() => setShowSignOut(!showSignOut)}>
             <img src={userInfo.picture} alt="Profile" className="profile-picture" />
             {showSignOut && (
-                <button className="sign-out-btn" onClick={handleSignOut}>Sign Out</button>
+              <button className="sign-out-btn" onClick={handleSignOut}>Sign Out</button>
             )}
-        </div>
+          </div>
+          <p>TESTING</p>
+          <h2>Google Calendar Events</h2>
+          <ul>
+            {events.map(event => (
+              <li key={event.id}>
+                <p><strong>{event.summary}</strong></p>
+                <p>{event.start.dateTime} - {event.end.dateTime}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       ) : (
         <p>No user information available.</p>
@@ -40,3 +67,21 @@ export default function Privacy() {
     </div>
   );
 }
+
+/*
+keep in function outside of return
+const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+const accessToken = localStorage.getItem('accessToken');
+
+keep in return
+{userInfo ? (
+        <div>
+          <h2>User Information</h2>
+          <p><strong>Name:</strong> {userInfo.name}</p>
+          <p><strong>Email:</strong> {userInfo.email}</p>
+          <p><strong>Access Token:</strong>{accessToken}</p>
+
+
+      ) : (
+        <p>No user information available.</p>
+*/
