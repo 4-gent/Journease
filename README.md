@@ -1,13 +1,25 @@
-##Journease: Personalized Journey Mapping
+### Directory Structure of Journease
 
-Finding where you need to go can be overwhelming with the plethora of options on platforms like Yelp and Google Maps. Journease simplifies this process, making your journey easier and more personalized.
+Journese
+	- node_modules
+	- src
+		- will store frontend code
+		- public
+			- will store images, css files, etc.
+		- components
+			- will store reusable components that will act as template the backend will feed into
+	- backend
+		- will store backend routing, database communication, and web-server code
+	- ml
+		- will store entire llm/ml processes
 
-#Key Features:
+## Things to keep in mind
+Will be using yarn package management for dependency installations and for running development and production web servers
 
-Personalized Recommendations: Receive tailored location suggestions based on your chat history and Instagram activity.
-Location-Based Suggestions: Get recommendations for possible new locations based on your current preferences and past choices.
-Map of You: Visualize the places you like and discover similar spots in new areas.
+To avoid confusion when coding, please remember to put files in relevant directories, these may be updated as we go on if needed so keep that in mind
 
-#Why Journease?
+Make your own branches that include your name and what you are uploading to distinguish who did what (i.e. Mj - First Commit)
 
-Journease leverages the power of Google Maps, advanced Large Language Models, and robust privacy and security measures to provide a seamless and personalized journey experience. By analyzing your location data and messaging history, Journease delivers recommendations that truly match your preferences and needs, ensuring you always find what you're looking for—quickly and easily.
+Please make push requests to prevent commit conflicts.
+
+Thanks guys!!
