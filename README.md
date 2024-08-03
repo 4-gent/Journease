@@ -19,5 +19,5 @@ Journese
 - To avoid confusion when coding, please remember to put files in relevant directories. These may be updated as we go on if needed, so keep that in mind.
 - Make your own branches that include your name and what you are uploading to distinguish who did what (i.e., Mj - First Commit).
 - Please make pull requests to prevent merge conflicts.
-
+## Please comment your code!!!!
 Thanks guys!!
