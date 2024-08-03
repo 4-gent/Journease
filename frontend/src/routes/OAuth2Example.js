@@ -43,6 +43,7 @@ const OAuth2Example = () => {
         const data = await response.json();
         setUserInfo(data);
         localStorage.setItem('userInfo', JSON.stringify(data)); // Store user info in local storage
+        localStorage.setItem('accessToken', accessToken); // Store user info in local storage
         navigate('/privacy'); // Redirect to /privacy
       } catch (error) {
         console.error('Failed to fetch user info:', error);
