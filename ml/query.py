@@ -1,5 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask
 import modal
+import json
+import re
 
 app = Flask(__name__)
 
@@ -11,11 +13,11 @@ llama_function = modal.Function.lookup("example-tgi-Meta-Llama-3-70B-Instruct", 
 def query():
     prompt = """
     Could you list food spots near 95111 that fits this criteria?
-        Food: Pho
-        Cuisine: Vietnamese
+        Food: Tacos
+        Cuisine: Mexican
         Price Range: '$'
         
-    In this JSON format:
+    Only return in this JSON format:
       {
         "name": "",
         "address": "",
@@ -34,11 +36,18 @@ def query():
 
     result = llama_function.remote(prompt)
     
-    # jsons the response
-    food_spots = result
-
-    return jsonify(food_spots)
+    # Use regex to extract the JSON part
+    json_match = re.search(r'\[(.*?)\]', result, re.DOTALL)
+    if json_match:
+        json_data = json_match.group(0)
+        # Parse the JSON data
+        data = json.loads(json_data)
+    else:
+        print("No JSON data found.")
+    
+    print(result)
+    return json.dumps(data, indent=2)
 
 if __name__ == '__main__':
     app.run(debug=True, port=4000)
-    query()
+    result = query()
