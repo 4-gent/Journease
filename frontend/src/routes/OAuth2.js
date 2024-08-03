@@ -1,11 +1,18 @@
+// Main incentive in using OAuth2 https://auth0.com/blog/why-migrate-from-api-keys-to-oauth2-access-tokens/
+
+// Importing libraries
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Creating a function call for authentication
 const OAuth2Example = () => {
+  // Use states to ensure LOCAL data is stored
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  // Navigation tool to go to Privacy page
   const navigate = useNavigate();
 
+  // Takes the client_id and starts an OAuth2 session, if properly authenticated, then the user will be redirected
   useEffect(() => {
     const loadGoogleClient = () => {
       if (typeof window.google !== 'undefined' && window.google.accounts && window.google.accounts.oauth2) {
@@ -32,7 +39,8 @@ const OAuth2Example = () => {
         console.error('Google API client is not loaded.');
       }
     };
-
+    
+    // Access Token is provided after authentication, GOOD security practice
     const fetchUserInfo = async (accessToken) => {
       try {
         const response = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
@@ -50,7 +58,7 @@ const OAuth2Example = () => {
       }
     };
 
-    // Load the Google API script
+    // Loads Google API script
     const script = document.createElement('script');
     script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
@@ -58,32 +66,21 @@ const OAuth2Example = () => {
     script.onload = loadGoogleClient;
     document.body.appendChild(script);
 
-    // Cleanup script when component unmounts
+    // Cleans up the scripts
     return () => {
       document.body.removeChild(script);
     };
   }, [navigate]);
 
+  // CHANGE THIS to fix the UI, currently not the greatest
   return (
     <div>
       <h1>OAuth2 Example</h1>
-      {isAuthenticated ? (
-        <div>
-          <h2>Logged In</h2>
-          {userInfo && (
-            <div>
-              <p><strong>Name:</strong> {userInfo.name}</p>
-              <p><strong>Email:</strong> {userInfo.email}</p>
-              <img src={userInfo.picture} alt="Profile" width="100" />
-            </div>
-          )}
-        </div>
-      ) : (
         <div>
           <p>Please authenticate to access your information.</p>
           <button id="authButton">Authenticate</button>
         </div>
-      )}
+      
     </div>
   );
 };

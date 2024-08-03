@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 import modal
 import json
 import re
@@ -9,29 +9,59 @@ app = Flask(__name__)
 modal_app = modal.App()
 llama_function = modal.Function.lookup("example-tgi-Meta-Llama-3-70B-Instruct", "Model.generate")
 
-@app.route('/query', methods=['GET'])
-def query():
-    prompt = """
-    Could you list food spots with this criteria?
-    {'location': 'New York', 'price': 'around 50 dollars', 'food': 'dinner', 'cuisine': 'Italian', 'other_details': 'good ambience'}
-        
-    Only return in this JSON format:
-      {
-        "name": "",
-        "address": "",
-        "distance": "",
-        "price_range": "",
-        "hours": {
-          "monday": "",
-          "tuesday": "",
-          "wednesday": "",
-          "thursday": "",
-          "friday": "",
-          "saturday": "",
-          "sunday": ""
-        }
-    """
+# change this localhost:3000/ !! 
+@app.route('/temp', methods=['GET'])
+def format_query():
+    # Get user input from the request JSON body
+    user_input = request.json.get('user_input')
 
+    # Construct the prompt
+    prompt = f"""
+    Extract the following details from the user's input:
+    - Location
+    - Price
+    - Food
+    - Cuisine
+    - Any other details
+
+    User input: "{user_input}"
+    
+    Output dict with keys: location, price, food, cuisine, other_details.
+    """
+    
+    # Assuming llama_function.remote returns a dictionary or JSON response
+    response = llama_function.remote(prompt)
+    
+    return response
+
+# http://127.0.0.1:4000/query
+@app.route('/query', methods=['GET', 'POST'])
+def query():
+    # template
+    formatted_query = "Mexican food"
+
+    prompt = f"""
+    Could you list food spots that fit this criteria? 
+
+    "{formatted_query}"
+
+    Only return in this JSON format:
+    {{
+    "name": "",
+    "address": "",
+    "distance": "",
+    "price_range": "",
+    "hours": {{
+        "monday": "",
+        "tuesday": "",
+        "wednesday": "",
+        "thursday": "",
+        "friday": "",
+        "saturday": "",
+        "sunday": ""
+        }}
+    }}
+    """
     result = llama_function.remote(prompt)
     
     # Use regex to extract the JSON part
