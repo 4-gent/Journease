@@ -41,7 +41,6 @@ export default function SideDash({ onSearch }) {
     return (
         <div>
             <div className='recommended'>
-                <h1>Recommended</h1>
                 {storedPrompt.map((location, index) => {
                     console.log('Location:', location); // Print each location object
                     return (

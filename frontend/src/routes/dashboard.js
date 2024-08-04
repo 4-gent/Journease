@@ -3,6 +3,9 @@ import SideDash from '../components/side-dash';
 import Prompt from '../components/prompt';
 // import axios from 'axios';
 import { NotificationContainer } from 'react-notifications'
+import '../public/dashboard.css';
+import data from '../public/dummy.json';
+import Item from '../components/item';
 // NotificationManager
 
 
@@ -14,8 +17,15 @@ export default function Dash() {
     useEffect(() => {
         const initMap = () => {
             const mapInstance = new window.google.maps.Map(document.getElementById('map'), {
-                center: { lat: 37.3861, lng: -122.0839 },
+                center: { lat: 37.3456, lng: -121.8847},
                 zoom: 8,
+                disableDefaultUI: true,
+                zoomControl: true,
+                mapTypeControl: false,
+                scaleControl: true,
+                streetViewControl: true,
+                rotateControl: false,
+                fullscreenControl: true
             });
             setMap(mapInstance);
 
@@ -44,7 +54,7 @@ export default function Dash() {
     const calculateAndDisplayRoute = (destination) => {
         if(!directionsService || !directionsRenderer) return
 
-        const origin = {lat: 37.77, lng: -122.447}
+        const origin = {lat: 37.3456, lng: -121.8847}
 
         directionsService.route(
             {
@@ -97,32 +107,44 @@ export default function Dash() {
     if(privacySettings.cookies || privacySettings.email || privacySettings.history || privacySettings.calendar || privacySettings.documents){
         return (
             <div className='main'>
-                <p>PROMPTING and SPEED</p>
-                <div className='main'>
-                <div className='prompt'>
-                        <Prompt />
+                        <div className='left-dashboard'>
+                            <SideDash onSearch={handleSearchResult}/>
+                            <div>
+                                <div className='section-header'>Speed Dial</div>
+                                <div className='item-list'>{data.map((item) => <Item {...item} onClick={()=>console.log(item)}/>)}</div>
+                            </div>
+                            <div>
+                                <div className='section-header'>Recommended</div>
+                                <div className='item-list'>{data.map((item) => <Item {...item}/>)}</div>
+                            </div>
+                            <div>
+                                <div className='section-header'><text>Prompt Recommendations</text></div>
+                                <div className='item-list'>{data.map((item) => <Item {...item}/>)}</div>
+                            </div>
+                        </div>
+                        <div className='map-section'>
+                            <div className='prompt'>
+                                <Prompt />
+                            </div>
+                            <div className='map' id='map' style={{ height: '100vh', width: '100%' }} />
+                        </div>
                     </div>
-                    <div className='left-dashboard'>
-                        <SideDash onSearch={handleSearchResult}/>
+                    );
+                } else {
+                    return (
+                        <div className='main'>
+                        <div className='left-dashboard'>
+                            <SideDash onSearch={handleSearchResult}/>
+                        </div>
+                        <div className='map-section'>
+                            <div className='prompt'>
+                                <Prompt />
+                            </div>
+                            <div className='map' id='map' style={{ height: '100vh', width: '100%' }} />
+                        </div>
                     </div>
-                    <div className='map' id='map' style={{ height: '500px', width: '100%' }} />
-                </div>
-            </div>
-        );
-    } else {
-        return (
-            <div className='main'>
-                <p>PROMPTING ONLY</p>
-                <div className='prompt'>
-                    <Prompt />
-                </div>
-                
-                <div className='map' id='map' style={{ height: '500px', width: '100%' }} />
-                <NotificationContainer />
-                    <SideDash onSearch={handleSearchResult}/>
-            </div>
             
-        );
+                    );
     }
 
 }

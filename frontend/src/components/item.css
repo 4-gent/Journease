@@ -1,0 +1,39 @@
+.marker-container{
+    align-items: center;
+    display: flex;
+    margin-right: 4px;
+    .marker {
+        width: 16px;
+        height: 16px;
+    }
+}
+.item-distance {
+    display: flex;
+    flex-direction: row;
+}
+.item-name {
+    font-size: larger;
+    font-weight: 700;
+}
+.item-location{
+    font-size: large;
+}
+.item-container {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    margin: 10px 10px;
+    min-height: 80px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.item-container:hover {
+    background-color: rgb(198, 234, 246); /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.item-container:active {
+    transform: scale(0.95); /* Slightly shrink on click */
+}

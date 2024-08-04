@@ -1,0 +1,46 @@
+.main{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+.left-dashboard{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    background: linear-gradient(to bottom, rgba(252, 252, 252, 0.80), rgba(0, 132, 255, 0.53), rgba(242, 157, 57, 0.53));
+}
+.map-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: relative;
+    width: 75%;
+    height: auto;
+}
+.map{
+    position: relative;
+    z-index: 1 !important;
+}
+
+.prompt{
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10 !important;
+    width: 60vw;
+}
+.section-header {
+    font-size: x-large;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    height: 80px;
+    align-items: center;
+}
+.item-list {
+    overflow-y: auto;
+    height: 250px;
+    border-radius: 20px;
+}
