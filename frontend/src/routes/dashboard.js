@@ -1,40 +1,62 @@
-import React, {useState, useEffect} from 'react'
+import React, { useEffect, useState } from 'react';
+import SideDash from '../components/side-dash';
+import Prompt from '../components/prompt';
+import axios from 'axios';
+import { NotificationManager, NotificationContainer } from 'react-notifications'
 
-export default function Dash(){
-    const privacySettings = JSON.parse(localStorage.getItem('privacySettings'));
-    const [result, setResult] = useState(null);
+export default function Dash() {
+    const [map, setMap] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try{
-                const response = await fetch('http://127.0.0.1:4000/query');
-                if(response){
-                    const data = await response.json();
-                    setResult(data);
-                }
-            }catch(err){
-                console.log(err);
-            }
+        const initMap = () => {
+            const mapInstance = new window.google.maps.Map(document.getElementById('map'), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8,
+            });
+            setMap(mapInstance);
+        };
+        if (!window.google || !window.google.maps) {
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhrl553lVeueBBjXw7v-HYUGS1m-qs0HM&callback=initMap`;
+            script.async = true;
+            script.defer = true;
+            script.onload = () => {
+                initMap();
+            };
+            document.head.appendChild(script);
+        } else {
+            initMap();
         }
-        fetchData();;
-    }, [])
+    }, []);
 
-    return(
+    const handleSearchResult = (data) => {
+        console.log('Search Result:', data);
+        if (data.lat && data.lng && map) {
+            const {lat, lng} = data
+            console.log('Updating map center to: ', {lat, lng})
+            map.setCenter({lat, lng})
+            map.setZoom(15)
+
+            new window.google.maps.Marker({
+                position: { lat, lng },
+                map: map,
+                title: 'Search Result'
+            });
+        } else{
+            console.error('Invalid data or map not initialized')
+        }
+    }
+
+    return (
         <div className='main'>
             <div className='prompt'>
-                <h1> Data: </h1>
-                {result ? (
-                    <pre>{JSON.stringify(result, null, 2)}</pre>
-                ) : (
-                    <p>No data available</p>
-                )}
+                <Prompt onSearch={handleSearchResult}/>
             </div>
             <div className='left-dashboard'>
-            
-            </div> 
-            <div className='map'>
-
+                {/* <SideDash /> */}
             </div>
+            <div className='map' id='map' style={{ height: '500px', width: '100%' }} />
+            <NotificationContainer />
         </div>
-    )
+    );
 }
