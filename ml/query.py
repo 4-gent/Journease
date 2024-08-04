@@ -13,8 +13,22 @@ llama_function = modal.Function.lookup("example-tgi-Meta-Llama-3-70B-Instruct", 
 @app.route('/temp', methods=['GET', 'POST'])
 def format_query():
     if request.method == 'POST':
-        prompt = request.form('prompt')
+        user_prompt = request.form('prompt')
     
+    prompt = f"""
+        Extract the following details from the user's input:
+
+        Location
+        Price
+        Food
+        Cuisine
+        Any other details
+
+        User input: "{user_prompt}"
+
+        Output dict with keys: location, price, food, cuisine, other_details.
+    """
+
     # Assuming llama_function.remote returns a dictionary or JSON response
     response = llama_function.remote(prompt)
     
