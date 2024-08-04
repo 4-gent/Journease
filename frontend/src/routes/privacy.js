@@ -37,7 +37,7 @@ export default function Privacy() {
     };
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    const accessToken = localStorage.getItem('accessToken');
+    // const accessToken = localStorage.getItem('accessToken');
 
     return (
         <div>

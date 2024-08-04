@@ -101,11 +101,9 @@ def query():
             json_data = json_match.group(0)
             # Parse the JSON data
             data = json.loads(json_data)
+            return jsonify(data)
         else:
-            print("No JSON data found.")
-        
-        print(result)
-        return jsonify(data)
+            return ("No JSON data found.")
     
     else:
         return "bad"
