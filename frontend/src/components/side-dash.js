@@ -1,39 +1,64 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, {useEffect } from 'react';
+// useState
+import axios from 'axios';
 
-export default function SideDash(){
-    const [speed_dial, setSpeedDial] = useState([]);
-    const [recommended, setRecommended] = useState([]);
-    
+export default function SideDash({ onSearch }) {
+    // const [recommended, setRecommended] = useState([]);
+
+    // Parse storedPrompt from localStorage
+    const storedPrompt = JSON.parse(localStorage.getItem('prompt')) || [];
+
+    console.log('Stored Prompt:', storedPrompt);
+
     useEffect(() => {
-        axios.get('/side-dash')
+        axios.get('http://localhost:8080/temp')
             .then(response => {
-                setSpeedDial(response.data.speed_dial)
-                setRecommended(response.data.recommended)
+                const data = Array.isArray(response.data) ? response.data : [];
+                // setRecommended(data);
+                console.log('Recommended Data:', data);
             })
             .catch(error => {
-                console.log(error)
-            })
-    }, [])
-    
-    return(
+                console.log('Error fetching recommended data:', error);
+            });
+    }, []);
+
+    const handleChoice = async (location) => {
+        try {
+            
+            console.log('Selected choice:', location);
+
+            const response = await axios.post('http://localhost:4000/directions', { prompt: location });
+
+            console.log('Response from server:', response);
+            if (onSearch) {
+                onSearch(response.data);
+            }
+        } catch (e) {
+            console.log('Error:', e);
+        }
+    };
+
+    return (
         <div>
-            <div className='speed-dial'>
-                {speed_dial.map((location) => (
-                    <div key={location.id}>
-                        <h3>{location.name}</h3>
-                        <p>{location.address}</p>
-                    </div>
-                ))}
-            </div>
             <div className='recommended'>
-                {recommended.map((location) => (
-                    <div key={location.id}>
-                        <h3>{location.name}</h3>
-                        <p>{location.address}</p>
-                    </div>
-                ))}
+                <h1>Recommended</h1>
+                {storedPrompt.map((location, index) => {
+                    console.log('Location:', location); // Print each location object
+                    return (
+                        <div key={index} onClick={() => handleChoice(location.address)} style={{ cursor: 'pointer' }}>
+                            <h3>{location.name}</h3>
+                            <p>{location.address}</p>
+                            <p>{location.distance}</p>
+                            <p>{location.price_range}</p>
+                            <ol>
+                                {location.hours && Object.entries(location.hours).map(([day, hours], i) => (
+                                    <li key={i}>{day}: {hours}</li>
+                                ))}
+                            </ol>
+                        </div>
+                    );
+                })}
             </div>
         </div>
-    )
+    );
 }

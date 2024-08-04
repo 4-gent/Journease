@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../public/privacy.css';
 import Dashboard from './dashboard.js';
 
@@ -12,30 +12,34 @@ export default function Privacy() {
     });
     const [showUserInfo, setShowUserInfo] = useState(false);
 
+    useEffect(() => {
+        localStorage.setItem('privacySettings', JSON.stringify(privacySettings));
+    }, [privacySettings]);
+
     const handleToggleChange = (e) => {
         const { name, checked } = e.target;
         setPrivacySettings(prevSettings => ({
             ...prevSettings,
             [name]: checked
         }));
-        localStorage.setItem('privacySettings', JSON.stringify(privacySettings));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Selected Privacy Options:', privacySettings);
         setShowUserInfo(true); // Show user info after submission
-        localStorage.setItem('privacySettings', JSON.stringify(privacySettings));
     };
-
+    const submit = () => {
+        navigate('/dashboard');
+    };
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    const accessToken = localStorage.getItem('accessToken');
+    // const accessToken = localStorage.getItem('accessToken');
 
     return (
-        <div>
+        <div className={styles.privacyPageWrapper}>
             {showUserInfo && userInfo ? (
                 <Dashboard />
-            ):(
+            ) : (
                 <div className="privacy-container">
                     <h1>Privacy Settings</h1>
                     <form onSubmit={handleSubmit} className="privacy-form">
@@ -104,11 +108,11 @@ export default function Privacy() {
                                 Allow Documents Access
                             </label>
                         </div>
-                        <button type="submit" className="submit-button">Submit Options</button>
-                    </form>  
-                </div>  
+                        <button type="submit" className="submit-button" onClick={submit}>Submit Options</button>
+                    </form>
+                </div>
             )}
+            
         </div>
-        
     );
 }

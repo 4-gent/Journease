@@ -24,7 +24,7 @@ export default function SignIn() {
           client_id:
             "858097161571-jcbqvah8djskts47h0qabraedtnb46v6.apps.googleusercontent.com",
           scope:
-            "https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/documents.readonly https://www.googleapis.com/auth/photoslibrary.readonly",
+            "https://www.googleapis.com/auth/calendar.readonly",
           callback: (tokenResponse) => {
             console.log("Token Response:", tokenResponse);
             if (tokenResponse && tokenResponse.access_token) {
@@ -45,6 +45,7 @@ export default function SignIn() {
         console.error("Google API client is not loaded.");
       }
     };
+
 
     // Access Token is provided after authentication, GOOD security practice
     const fetchUserInfo = async (accessToken) => {
