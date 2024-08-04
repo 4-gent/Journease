@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../public/privacy.css';
 import Dashboard from './dashboard.js';
+import { useNavigate } from "react-router-dom";
 
 export default function Privacy() {
     const [privacySettings, setPrivacySettings] = useState({
@@ -10,6 +11,7 @@ export default function Privacy() {
         calendar: false,
         documents: false
     });
+    const navigate = useNavigate();
     const [showUserInfo, setShowUserInfo] = useState(false);
 
     const handleToggleChange = (e) => {
@@ -27,6 +29,10 @@ export default function Privacy() {
         setShowUserInfo(true); // Show user info after submission
         localStorage.setItem('privacySettings', JSON.stringify(privacySettings));
     };
+
+    const submit = () => {
+      navigate('/dashboard')
+    }
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     const accessToken = localStorage.getItem('accessToken');
@@ -104,7 +110,7 @@ export default function Privacy() {
                                 Allow Documents Access
                             </label>
                         </div>
-                        <button type="submit" className="submit-button">Submit Options</button>
+                        <button type="submit" className="submit-button" onClick={submit}>Submit Options</button>
                     </form>  
                 </div>  
             )}
