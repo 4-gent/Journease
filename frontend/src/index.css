@@ -1,3 +1,54 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  margin: 0;
+  --text-color-light: #213547;
+  --bg-color-light: #ffffff;
+  --text-color-dark: #ffffff;
+  --bg-color-dark: #2F3747;
+  --text-color: var(--text-color-light);
+  --bg-color: var(--bg-color-light);
+
+  --header-text-color-light: #4D869C;
+  --header-text-color-dark: #FFFFFF;
+  --input-bg-color-light: #ffffff;
+  --input-bg-color-dark: #182133;
+  --input-border-color-light: black;
+  --input-border-color-dark: white;
+  --button-bg-color-light: #7AB2B2;
+  --button-bg-color-dark: #5D6470;
+  --button-hover-color-light: #618b8b;
+  --button-hover-color-dark: #777f8f;
+  --banner-bg-color-light: #4D869C;
+  --banner-bg-color-dark: #182133;
+
+  /* default values */
+  --text-color: var(--text-color-light);
+  --bg-color: var(--bg-color-light);
+  --input-bg-color: var(--input-bg-color-light);
+  --button-bg-color: var(--button-bg-color-light);
+  --button-hover-color: var(--button-hover-color-light);
+  --header-text-color: var(--header-text-color-light);
+  --input-border-color: var(--input-border-color-light);
+  --banner-bg-color: var(--banner-bg-color-light);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+.dark-mode {
+  --text-color: var(--text-color-dark);
+  --bg-color: var(--bg-color-dark);
+  --input-bg-color: var(--input-bg-color-dark);
+  --button-bg-color: var(--button-bg-color-dark);
+  --button-hover-color: var(--button-hover-color-dark);
+  --header-text-color: var(--header-text-color-dark);
+  --input-border-color: var(--input-border-color-dark);
+  --banner-bg-color: var(--banner-bg-color-dark);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +56,4 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
