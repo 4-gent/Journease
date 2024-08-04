@@ -4,6 +4,8 @@ import modal
 import json
 import re
 
+from fake_data import speeddial_data
+
 app = Flask(__name__)
 CORS(app, origins = ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:4000'])
 
@@ -64,6 +66,7 @@ def query():
 
                 User input: "{user_prompt}"
 
+<<<<<<< Updated upstream
                 Output dict with keys: location, price, food, cuisine, other_details.
                 """
             
@@ -91,6 +94,25 @@ def query():
             "saturday": "",
             "sunday": ""
             }}
+=======
+    Give suggestions based on the following location history: 
+    {speeddial_data}
+
+    Only return in this JSON format:
+    {{
+    "name": "",
+    "address": "",
+    "distance": "",
+    "price_range": "",
+    "hours": {{
+        "monday": "",
+        "tuesday": "",
+        "wednesday": "",
+        "thursday": "",
+        "friday": "",
+        "saturday": "",
+        "sunday": ""
+>>>>>>> Stashed changes
         }}
         """
         result = llama_function.remote(prompt)
