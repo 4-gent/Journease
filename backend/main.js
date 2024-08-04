@@ -8,10 +8,14 @@ const http = require('http');
 const MongoClient= require('mongodb').MongoClient;
 const axios = require('axios');
 const { error } = require('console');
+const cors = require('cors');
+
 
 require('dotenv').config()
 
 const app = express();
+
+app.use(cors())
 const PORT = process.env.PORT
 
 const httpServer = http.createServer(app);
