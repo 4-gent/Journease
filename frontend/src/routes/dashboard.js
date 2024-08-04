@@ -46,19 +46,14 @@ export default function Dash() {
             console.error('Invalid data or map not initialized')
         }
     }
-    const privacySettings = (localStorage.getItem('privacySettings'));
-    console.log('Privacy Settings:', privacySettings);
 
-    console.log('Cookies:', privacySettings.cookies)
-    
-    
     return (
         <div className='main'>
             <div className='prompt'>
-                <Prompt onSearch={handleSearchResult}/>
+                <Prompt />
             </div>
             <div className='left-dashboard'>
-                {/* <SideDash /> */}
+                <SideDash onSearch={handleSearchResult}/>
             </div>
             <div className='map' id='map' style={{ height: '500px', width: '100%' }} />
             <NotificationContainer />
