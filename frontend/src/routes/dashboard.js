@@ -50,11 +50,7 @@ export default function Dash() {
     return (
         <div className='main'>
             <div className='prompt'>
-<<<<<<< HEAD
                 <Prompt onSearch={handleSearchResult}/>
-=======
-                <Prompt />
->>>>>>> main
             </div>
             <div className='left-dashboard'>
                 <SideDash onSearch={handleSearchResult}/>
