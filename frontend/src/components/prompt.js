@@ -8,7 +8,7 @@ export default function Prompt({ onSearch }) {
         e.preventDefault();
         try {
             console.log(prompt)
-            const prompt_request = await axios.post('http://localhost:5000/temp', prompt);
+            const prompt_request = await axios.post('http://localhost:8080/temp', prompt);
             console.log(prompt_request.data)
             if (onSearch) {
                 onSearch(prompt_request.data);
