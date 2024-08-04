@@ -52,11 +52,10 @@ export default function Dash() {
             <div className='prompt'>
                 <Prompt />
             </div>
-            <div className='left-dashboard'>
-                <SideDash onSearch={handleSearchResult}/>
-            </div>
+            
             <div className='map' id='map' style={{ height: '500px', width: '100%' }} />
             <NotificationContainer />
+                <SideDash onSearch={handleSearchResult}/>
         </div>
     );
 }
