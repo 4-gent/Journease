@@ -4,7 +4,7 @@ import Dashboard from './dashboard.js';
 import Button from '../public/utils/Button.js'
 const Home = () => {
     return (
-        <div> <Button className='training-button-container'>Train</Button> </div>
+        <div> <Button className='signin-page'>Sign-In</Button> </div>
      );
 
 };
