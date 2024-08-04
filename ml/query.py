@@ -37,7 +37,8 @@ def format_query():
 # http://127.0.0.1:4000/query
 @app.route('/query', methods=['GET', 'POST'])
 def query():
-    # template
+    # template 
+    # formatted_query = format_query()
     formatted_query = "Mexican food"
 
     prompt = f"""

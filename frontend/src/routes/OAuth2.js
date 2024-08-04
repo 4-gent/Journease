@@ -31,8 +31,7 @@ const OAuth2Example = () => {
             console.error('Token client error:', error);
           }
         });
-
-        document.getElementById('authButton').addEventListener('click', () => {
+                document.getElementById('authButton').addEventListener('click', () => {
           client.requestAccessToken();
         });
       } else {
