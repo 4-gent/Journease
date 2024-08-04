@@ -47,15 +47,41 @@ export default function Dash() {
         }
     }
 
-    return (
-        <div className='main'>
-            <div className='prompt'>
-                <Prompt />
+    // Retrieve the privacySettings from localStorage
+    const privacySettingsStr = localStorage.getItem('privacySettings');
+    
+    // Parse the JSON string to an object
+    const privacySettings = JSON.parse(privacySettingsStr);
+
+
+    console.log(privacySettings.cookies, privacySettings.email, privacySettings.history, privacySettings.calendar, privacySettings.documents)
+
+    if(privacySettings.cookies || privacySettings.email || privacySettings.history || privacySettings.calendar || privacySettings.documents){
+        return (
+            <div className='main'>
+                <p>PROMPTING and SPEED</p>
+                <div className='prompt'>
+                    <Prompt />
+                </div>
+                
+                <div className='map' id='map' style={{ height: '500px', width: '100%' }} />
+                <NotificationContainer />
+                    <SideDash onSearch={handleSearchResult}/>
             </div>
-            
-            <div className='map' id='map' style={{ height: '500px', width: '100%' }} />
-            <NotificationContainer />
-                <SideDash onSearch={handleSearchResult}/>
-        </div>
-    );
+        );
+    } else {
+        return (
+            <div className='main'>
+                <p>PROMPTING ONLY</p>
+                <div className='prompt'>
+                    <Prompt />
+                </div>
+                
+                <div className='map' id='map' style={{ height: '500px', width: '100%' }} />
+                <NotificationContainer />
+                    <SideDash onSearch={handleSearchResult}/>
+            </div>
+        );
+    }
+
 }

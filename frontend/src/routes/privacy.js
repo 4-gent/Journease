@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../public/privacy.css';
 import Dashboard from './dashboard.js';
 import { useNavigate } from "react-router-dom";
@@ -14,25 +14,27 @@ export default function Privacy() {
     const navigate = useNavigate();
     const [showUserInfo, setShowUserInfo] = useState(false);
 
+    useEffect(() => {
+        localStorage.setItem('privacySettings', JSON.stringify(privacySettings));
+    }, [privacySettings]);
+
     const handleToggleChange = (e) => {
         const { name, checked } = e.target;
         setPrivacySettings(prevSettings => ({
             ...prevSettings,
             [name]: checked
         }));
-        localStorage.setItem('privacySettings', JSON.stringify(privacySettings));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Selected Privacy Options:', privacySettings);
         setShowUserInfo(true); // Show user info after submission
-        localStorage.setItem('privacySettings', JSON.stringify(privacySettings));
     };
 
     const submit = () => {
-      navigate('/dashboard')
-    }
+        navigate('/dashboard');
+    };
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     const accessToken = localStorage.getItem('accessToken');
@@ -41,7 +43,7 @@ export default function Privacy() {
         <div>
             {showUserInfo && userInfo ? (
                 <Dashboard />
-            ):(
+            ) : (
                 <div className="privacy-container">
                     <h1>Privacy Settings</h1>
                     <form onSubmit={handleSubmit} className="privacy-form">
@@ -111,10 +113,9 @@ export default function Privacy() {
                             </label>
                         </div>
                         <button type="submit" className="submit-button" onClick={submit}>Submit Options</button>
-                    </form>  
-                </div>  
+                    </form>
+                </div>
             )}
         </div>
-        
     );
 }
