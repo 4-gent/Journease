@@ -21,3 +21,4 @@ Journese
 - Please make pull requests to prevent merge conflicts.
 ## Please comment your code!!!!
 Thanks guys!!
+Link to google drive: https://docs.google.com/document/d/1FJS-H5zayGjGrw6JdKHp9cnwSR1UecdZ_hmkXaMqd2w/edit

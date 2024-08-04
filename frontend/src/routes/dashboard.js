@@ -1,52 +1,62 @@
-import React, { useEffect, useState } from 'react'
-import sideDash from '../components/side-dash'
-import Prompt from '../components/prompt'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import SideDash from '../components/side-dash';
+import Prompt from '../components/prompt';
+import axios from 'axios';
+import { NotificationManager, NotificationContainer } from 'react-notifications'
 
-export default function Dash(){
-    const[map, setMap] = useState(null)
+export default function Dash() {
+    const [map, setMap] = useState(null);
 
     useEffect(() => {
         const initMap = () => {
-            const mapOptions = {
+            const mapInstance = new window.google.maps.Map(document.getElementById('map'), {
+                center: { lat: -34.397, lng: 150.644 },
                 zoom: 8,
-                center: { lat: 37.7749, lng: -122.4194 }
-            }
+            });
+            setMap(mapInstance);
+        };
+        if (!window.google || !window.google.maps) {
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBhrl553lVeueBBjXw7v-HYUGS1m-qs0HM&callback=initMap`;
+            script.async = true;
+            script.defer = true;
+            script.onload = () => {
+                initMap();
+            };
+            document.head.appendChild(script);
+        } else {
+            initMap();
         }
-        const map = new window.google.maps.Map(document.getElementById('map'), mapOptions)
-        setMap(map)
-        const script = document.createElement('script')
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.API_KEY}`
-        script.async = true
-        script.defer = true
-        document.head.appendChild(script)
-        window.initMap = initMap
-    }, [])
+    }, []);
 
-    const handleLocationSearch = async(location) =>{
-        try{
-            const response = await axios.post('/query', { prompt: location })
-            if(response.data.status == 'OK'){
-                const { lat, lng } = response.data.results[0].geometry.location
-                console.log(`Location found: ${lat}, ${lng}`)
-                map.setCenter({lat, lng})
-                map.setZoom(10)
-            } else{
-                console.error('Location not found: ', response.data.status)
-            }
-        }catch(error){
-            console.log(error)
+    const handleSearchResult = (data) => {
+        console.log('Search Result:', data);
+        if (data.lat && data.lng && map) {
+            const {lat, lng} = data
+            console.log('Updating map center to: ', {lat, lng})
+            map.setCenter({lat, lng})
+            map.setZoom(15)
+
+            new window.google.maps.Marker({
+                position: { lat, lng },
+                map: map,
+                title: 'Search Result'
+            });
+        } else{
+            console.error('Invalid data or map not initialized')
         }
     }
-    return(
+
+    return (
         <div className='main'>
             <div className='prompt'>
-                <Prompt onSearch={handleLocationSearch} />
+                <Prompt onSearch={handleSearchResult}/>
             </div>
             <div className='left-dashboard'>
-                <sideDash />
-            </div> 
-            <div className='map' id='map' style={{height: '500px', width: '100%'}} />
+                {/* <SideDash /> */}
+            </div>
+            <div className='map' id='map' style={{ height: '500px', width: '100%' }} />
+            <NotificationContainer />
         </div>
-    )
+    );
 }
