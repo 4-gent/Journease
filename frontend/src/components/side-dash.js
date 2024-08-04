@@ -9,12 +9,14 @@ export default function SideDash({ onSearch }){
     useEffect(() => {
         axios.get('http://localhost:8080/temp')
             .then(response => {
-                setRecommended(response.data)
+                const data = Array.isArray(response.data) ? response.data : [];
+                setRecommended(data);
             })
             .catch(error => {
-                console.log(error)
-            })
-    }, [])
+                console.log(error);
+            });
+    }, []);
+    
     
     const handleChoice = async(e) => {
         try{
@@ -35,15 +37,15 @@ export default function SideDash({ onSearch }){
             </div>
             <div className='recommended'>
                 {recommended.map((location) => (
-                    <div key={location.id} onClick={() => handleChoice(choice)} style={{curser: 'pointer'}}>
+                    <div key={location.id} onClick={() => handleChoice(location)} style={{ cursor: 'pointer' }}>
                         <h3>{location.name}</h3>
-                        <p value={choice.choice} onChange={(e) => setChoice({ ...choice, choice: e.target.value})}>{location.choice}</p>
+                        <p>{location.choice}</p>
                         <p>{location.distance}</p>
                         <p>{location.price_range}</p>
                         <ol>
                             <li>{location.hours}</li>
                         </ol>
-                    </div>
+                </div>
                 ))}
             </div>
         </div>
