@@ -1,4 +1,4 @@
-[
+speeddial_data = [
   {
     "name": "Pho Ha Noi San Jose",
     "address": "969 Story Road, Unit 6048, San Jose, CA 95122",
