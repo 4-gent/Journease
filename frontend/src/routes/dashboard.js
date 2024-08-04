@@ -50,10 +50,14 @@ export default function Dash() {
     return (
         <div className='main'>
             <div className='prompt'>
+<<<<<<< HEAD
                 <Prompt onSearch={handleSearchResult}/>
+=======
+                <Prompt />
+>>>>>>> main
             </div>
             <div className='left-dashboard'>
-                {/* <SideDash /> */}
+                <SideDash onSearch={handleSearchResult}/>
             </div>
             <div className='map' id='map' style={{ height: '500px', width: '100%' }} />
             <NotificationContainer />

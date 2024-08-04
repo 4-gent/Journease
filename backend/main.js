@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, "../frontend/public/")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.post('/query', async (req, res) => {
+app.post('/directions', async (req, res) => {
     const { prompt } = req.body;
 
     if (!prompt) {
@@ -56,7 +56,7 @@ app.post('/query', async (req, res) => {
 });
 
 // dashboard query after single sign on and ml processing
-app.post('/side-dash', async (req, res) => {
+app.post('/dashboard', async (req, res) => {
     try {
         await client.connect();
         const data = client.db(database);

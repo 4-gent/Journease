@@ -10,25 +10,25 @@ modal_app = modal.App()
 llama_function = modal.Function.lookup("example-tgi-Meta-Llama-3-70B-Instruct", "Model.generate")
 
 # change this localhost:3000/ !! 
-@app.route('/temp', methods=['GET'])
+@app.route('/temp', methods=['GET', 'POST'])
 def format_query():
-    # Get user input from the request JSON body
-    user_input = request.json.get('user_input')
-
-    # Construct the prompt
+    if request.method == 'POST':
+        user_prompt = request.form('prompt')
+    
     prompt = f"""
-    Extract the following details from the user's input:
-    - Location
-    - Price
-    - Food
-    - Cuisine
-    - Any other details
+        Extract the following details from the user's input:
 
-    User input: "{user_input}"
-    
-    Output dict with keys: location, price, food, cuisine, other_details.
+        Location
+        Price
+        Food
+        Cuisine
+        Any other details
+
+        User input: "{user_prompt}"
+
+        Output dict with keys: location, price, food, cuisine, other_details.
     """
-    
+
     # Assuming llama_function.remote returns a dictionary or JSON response
     response = llama_function.remote(prompt)
     
@@ -38,10 +38,9 @@ def format_query():
 @app.route('/query', methods=['GET', 'POST'])
 def query():
     # template
-    formatted_query = "Mexican food"
+    formatted_query = format_query()
 
     prompt = f"""
-    Could you list food spots that fit this criteria? 
 
     "{formatted_query}"
 
@@ -74,8 +73,8 @@ def query():
         print("No JSON data found.")
     
     print(result)
-    return json.dumps(data, indent=2)
+    return jsonify(data)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=4000)
+    app.run(debug=True, port=5000)
     result = query()
