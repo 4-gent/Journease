@@ -1,5 +1,6 @@
 import React from "react";
-const backgroundImage = "../static/background.png";
+import backgroundImage from "../static/background.png";
+
 export default function Background({ children }) {
   const style = {
     backgroundImage: `url(${backgroundImage})`,
@@ -12,5 +13,3 @@ export default function Background({ children }) {
 
   return <div style={style}>{children}</div>;
 }
-
-
