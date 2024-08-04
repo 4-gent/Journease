@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import SideDash from '../components/side-dash';
 import Prompt from '../components/prompt';
 import axios from 'axios';
-import { NotificationManager, NotificationContainer } from 'react-notifications'
+import { NotificationManager, NotificationContainer } from 'react-notifications';
+import './dashboard.css';
 
 export default function Dash() {
     const [map, setMap] = useState(null);
@@ -55,7 +56,7 @@ export default function Dash() {
             <div className='left-dashboard'>
                 <SideDash onSearch={handleSearchResult}/>
             </div>
-            <div className='map' id='map' style={{ height: '500px', width: '100%' }} />
+            <div className='map' id='map' style={{ height: '100%', width: '100%' }} />
             <NotificationContainer />
         </div>
     );

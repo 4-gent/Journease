@@ -36,6 +36,7 @@ export default function Privacy() {
             {showUserInfo && userInfo ? (
                 <Dashboard />
             ) : (
+                <>
                 <div className={styles.privacyContainer}>
                     <h1>Privacy Settings</h1>
                     <div className={styles.form}>
@@ -109,8 +110,17 @@ export default function Privacy() {
                         </form>
                     </div>
                 </div>
-                
-                
+                <div className={styles.disclaimer}>
+                    <text>
+                        1. Information We Collect. Personalized Recommendations: We collect and analyze your chat history and Instagram activity to provide tailored location suggestions. This data is used to enhance your experience by recommending places that match your interests and preferences. Location-Based Suggestions: We gather information about your current preferences and past choices to offer location-based recommendations. This includes tracking your favorite restaurants and the types of cuisine you prefer. Map of You: We create specialized maps that visualize the places you like and help you discover similar spots in new areas. This involves collecting data about your visited locations and liked places. 2. Sharing Your Information. We do not share your personal information with third parties, except in the following circumstances: With your consent, For legal reasons, such as complying with a legal obligation or protecting our rights, or With service providers who assist us in operating our app, as long as they agree to keep your information confidential. 4. Your Privacy Choices. Privacy Settings: You can adjust your privacy settings within the app to control how we collect and use your data. This includes managing your chat history and Instagram activity sharing preferences. Location Data: You can choose to disable location tracking at any time through your device settings. However, this may limit the app's ability to provide location-based suggestions. 5. Security. We implement reasonable security measures to protect your information from unauthorized access, use, or disclosure. However, no method of transmission over the internet or electronic storage is completely secure. 6. Changes to This Privacy Policy. We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on our website and updating the effective date. 7. Contact Us. If you have any questions or concerns about this Privacy Policy, please contact us at: help@journease.com
+                    </text>
+                    <br/>
+                    <br/>
+                    <text>
+                        By using our app, you agree to the terms of this Privacy Policy. If you do not agree with these terms, please do not use our app.
+                    </text>
+                </div>
+                </>
             )}
             
         </div>
