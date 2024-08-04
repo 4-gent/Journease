@@ -66,7 +66,6 @@ def query():
 
                 User input: "{user_prompt}"
 
-<<<<<<< Updated upstream
                 Output dict with keys: location, price, food, cuisine, other_details.
                 """
             
@@ -75,9 +74,10 @@ def query():
 
         prompt = f"""
         List restaurants given the following query:
-        
-
         "{response}"
+        
+        Give suggestions based on the following location history: 
+        {speeddial_data}
 
         Only return in this JSON format:
         {{
@@ -94,25 +94,6 @@ def query():
             "saturday": "",
             "sunday": ""
             }}
-=======
-    Give suggestions based on the following location history: 
-    {speeddial_data}
-
-    Only return in this JSON format:
-    {{
-    "name": "",
-    "address": "",
-    "distance": "",
-    "price_range": "",
-    "hours": {{
-        "monday": "",
-        "tuesday": "",
-        "wednesday": "",
-        "thursday": "",
-        "friday": "",
-        "saturday": "",
-        "sunday": ""
->>>>>>> Stashed changes
         }}
         """
         result = llama_function.remote(prompt)
