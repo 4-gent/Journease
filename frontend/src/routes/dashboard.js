@@ -3,8 +3,6 @@ import SideDash from '../components/side-dash';
 import Prompt from '../components/prompt';
 // import axios from 'axios';
 import { NotificationContainer } from 'react-notifications'
-// NotificationManager
-
 
 export default function Dash() {
     const [map, setMap] = useState(null);
@@ -82,7 +80,6 @@ export default function Dash() {
             console.error('Invalid data or map not initalized')
         }
     }
-
     // Retrieve the privacySettings from localStorage
     const privacySettingsStr = localStorage.getItem('privacySettings');
     
@@ -124,5 +121,4 @@ export default function Dash() {
             
         );
     }
-
 }

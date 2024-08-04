@@ -4,6 +4,8 @@ import modal
 import json
 import re
 
+from fake_data import speeddial_data
+
 app = Flask(__name__)
 CORS(app, origins = ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:4000'])
 
@@ -72,9 +74,10 @@ def query():
 
         prompt = f"""
         List restaurants given the following query:
-        
-
         "{response}"
+        
+        Give suggestions based on the following location history: 
+        {speeddial_data}
 
         Only return in this JSON format:
         {{

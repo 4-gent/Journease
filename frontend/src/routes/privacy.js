@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../public/privacy.css';
 import Dashboard from './dashboard.js';
-import { useNavigate } from "react-router-dom";
 
 export default function Privacy() {
     const [privacySettings, setPrivacySettings] = useState({
@@ -11,7 +10,6 @@ export default function Privacy() {
         calendar: false,
         documents: false
     });
-    const navigate = useNavigate();
     const [showUserInfo, setShowUserInfo] = useState(false);
 
     useEffect(() => {
@@ -31,16 +29,14 @@ export default function Privacy() {
         console.log('Selected Privacy Options:', privacySettings);
         setShowUserInfo(true); // Show user info after submission
     };
-
     const submit = () => {
         navigate('/dashboard');
     };
-
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     // const accessToken = localStorage.getItem('accessToken');
 
     return (
-        <div>
+        <div className={styles.privacyPageWrapper}>
             {showUserInfo && userInfo ? (
                 <Dashboard />
             ) : (
@@ -116,6 +112,7 @@ export default function Privacy() {
                     </form>
                 </div>
             )}
+            
         </div>
     );
 }
