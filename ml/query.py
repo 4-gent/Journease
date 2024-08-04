@@ -9,12 +9,8 @@ app = Flask(__name__)
 modal_app = modal.App()
 llama_function = modal.Function.lookup("example-tgi-Meta-Llama-3-70B-Instruct", "Model.generate")
 
-# change this localhost:3000/ !! 
-@app.route('/temp', methods=['GET'])
-def format_query():
-    # Get user input from the request JSON body
-    user_input = request.json.get('user_input')
 
+def format_query(user_input):
     # Construct the prompt
     prompt = f"""
     Extract the following details from the user's input:
@@ -38,7 +34,8 @@ def format_query():
 @app.route('/query', methods=['GET', 'POST'])
 def query():
     # template
-    formatted_query = "Mexican food"
+    user_input = request.json.get('user_input')
+    formatted_query = format_query(user_input)
 
     prompt = f"""
     Could you list food spots that fit this criteria? 
