@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Creating a function call for authentication
-const OAuth2Example = () => {
+export default function SignIn() {
   // Use states to ensure LOCAL data is stored
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
@@ -92,6 +92,4 @@ const OAuth2Example = () => {
       </div>
     </div>
   );
-};
-
-export default OAuth2Example;
+}

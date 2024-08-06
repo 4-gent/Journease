@@ -1,11 +1,19 @@
-import './public/main.css'
-import OAuth2Example from './routes/OAuth2';
+import "./public/main.css";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Footer from "./components/Footer";
+import Background from "./components/Background";
 
-export default function Main(){
-    return(
-        // this will be sign in landing page
-        <div>
-            <OAuth2Example />
-        </div>
-    )
+export default function Main() {
+  return (
+    <Background>
+      {
+        <>
+          <Header />
+          <Hero />
+          <Footer />
+        </>
+      }
+    </Background>
+  );
 }

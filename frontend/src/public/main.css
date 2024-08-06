@@ -1,0 +1,133 @@
+.Main {
+  background-image: url("../static/background.png");
+  background-size: cover;
+  background-color: red;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  padding: 1rem;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  margin: 0 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  margin-right: 0.5rem;
+}
+
+.hero {
+  flex: 1; /* Allows the Hero section to grow and fill available space */
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+button {
+  /* background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 25px;
+  cursor: pointer; */
+
+  background: linear-gradient(
+    45deg,
+    #007bff,
+    #0056b3
+  ); /* Gradient background */
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+/* Hover effect */
+button:hover {
+  background: linear-gradient(
+    45deg,
+    #0056b3,
+    #003a75
+  ); /* Darker gradient on hover */
+  transform: translateY(-3px); /* Lift effect */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+/* Active effect */
+button:active {
+  transform: translateY(-1px); /* Slightly lower lift effect */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Slightly reduced shadow on active */
+}
+
+/* Focus effect */
+button:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Glowing effect on focus */
+}
+
+footer p {
+  color: whitesmoke;
+}
+
+.social-icons a {
+  margin-left: 1rem;
+  color: white;
+  text-decoration: none;
+}
+
+/* You'll need to add specific styles for the social media icons */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers content horizontally */
+  /* justify-content: center; Centers content vertically */
+  text-align: center; /* Centers text inside the section */
+  padding: 2rem; /* Add padding if needed */
+  position: relative; /* Allows absolute positioning of the background image */
+}
+
+.hero h1 {
+  font-size: 2.5rem; /* Adjust font size as needed */
+  /* margin-bottom: 5rem; Spacing between the heading and the paragraph */
+}
+
+.hero p {
+  font-size: 1.25rem; /* Adjust font size as needed */
+  margin-bottom: 1.5rem; /* Spacing between the paragraph and the button */
+  min-width: 70%;
+}
